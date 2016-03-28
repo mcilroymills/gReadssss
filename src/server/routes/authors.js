@@ -4,7 +4,18 @@ var pg = require('pg');
 var queries = require('../../../db/queries');
 
 router.get('/', function(req, res, next) {
-  res.render('authors', { title: 'Express' });
+    queries.Authors()
+    .then(function(authors) {
+        return
+    })
+    .then(function(data) {
+
+        console.log(data);
+        res.json(data);
+        res.render('authors', {
+            authors: data
+        });
+    })
 });
 
 router.get('/:id', function(req, res, next) {
