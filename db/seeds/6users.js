@@ -1,12 +1,45 @@
+var bcrypt = require("bcrypt");
 
 exports.seed = function(knex, Promise) {
   return Promise.join(
     // Deletes ALL existing entries
-    knex('table_name').del(), 
+    knex('users').del(),
 
-    // Inserts seed entries
-    knex('table_name').insert({id: 1, colName: 'rowValue'}),
-    knex('table_name').insert({id: 2, colName: 'rowValue2'}),
-    knex('table_name').insert({id: 3, colName: 'rowValue3'})
+    knex('users').insert(
+      {
+        fname: 'Mills',
+        email: 'millsmcilroy@gmail.com',
+        password: bcrypt.hashSync('test', 10),
+        admin: true
+      }),
+    knex('users').insert(
+      {
+        fname: 'Valerie',
+        email: 'valeriekraucunas@gmail.com',
+        password: bcrypt.hashSync('test', 10),
+        admin: true
+      }),
+    knex('users').insert(
+      {
+        fname: 'Jacob',
+        email: 'fake1@faker.com',
+        password: bcrypt.hashSync('test', 10),
+        admin: false
+      }),
+    knex('users').insert(
+      {
+        fname: 'Carol',
+        email: 'fake2@faker.com',
+        password: bcrypt.hashSync('test', 10),
+        admin: false
+      }),
+      knex('users').insert(
+      {
+        fname: 'Louis',
+        email: 'loop@netscape.net',
+        password: bcrypt.hashSync('test', 10),
+        admin: false
+      })
   );
 };
+

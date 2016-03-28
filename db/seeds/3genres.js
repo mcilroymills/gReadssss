@@ -6,37 +6,115 @@ exports.seed = function(knex, Promise) {
 
     // Inserts seed entries
     knex('genres').insert({
-        name:
+        name: 'Art'
     }),
     knex('genres').insert({
-        name:
+        name: 'Biography'
     }),
     knex('genres').insert({
-        name:
+        name: 'Business'
     }),
     knex('genres').insert({
-        name:
+        name: 'Children\'s'
     }),
     knex('genres').insert({
-        name:
+        name: 'Christian'
+    })
+    knex('genres').insert({
+        name: 'Classics'
     }),
     knex('genres').insert({
-        name:
+        name: 'Comics'
     }),
     knex('genres').insert({
-        name:
+        name: 'Contemporary'
     }),
     knex('genres').insert({
-        name:
+        name: 'Cookbooks'
     }),
     knex('genres').insert({
-        name:
+        name: 'Crime'
     }),
     knex('genres').insert({
-        name:
+        name: 'Fantasy'
     }),
     knex('genres').insert({
-        name:
+        name: 'Fiction'
     }),
+    knex('genres').insert({
+        name: 'Graphic Novels'
+    }),
+    knex('genres').insert({
+        name: 'Historical Fiction'
+    }),
+    knex('genres').insert({
+        name: 'History'
+    }),
+    knex('genres').insert({
+        name: 'Horror'
+    }),
+    knex('genres').insert({
+        name: 'Humor And Comedy'
+    }),
+    knex('genres').insert({
+        name: 'Manga'
+    }),
+    knex('genres').insert({
+        name: 'Memoir'
+    }),
+    knex('genres').insert({
+        name: 'Music'
+    }),
+    knex('genres').insert({
+        name: 'Mystery'
+    }),
+    knex('genres').insert({
+        name: 'Non Fiction'
+    }),
+    knex('genres').insert({
+        name: 'Paranormal'
+    }),
+    knex('genres').insert({
+        name: 'Philosophy'
+    }),
+    knex('genres').insert({
+        name: 'Poetry'
+    }),
+    knex('genres').insert({
+        name: 'Psychology'
+    }),
+    knex('genres').insert({
+        name: 'Religion'
+    }),
+    knex('genres').insert({
+        name: 'Romance'
+    }),
+    knex('genres').insert({
+        name: 'Science'
+    }),
+    knex('genres').insert({
+        name: 'Science Fiction'
+    }),
+    knex('genres').insert({
+        name: 'Self Help'
+    }),
+    knex('genres').insert({
+        name: 'Suspense'
+    }),
+    knex('genres').insert({
+        name: 'Spirituality'
+    }),
+    knex('genres').insert({
+        name: 'Sports'
+    }),
+    knex('genres').insert({
+        name: 'Thriller'
+    }),
+    knex('genres').insert({
+        name: 'Travel'
+    }),
+    knex('genres').insert({
+        name: 'Young Adult'
+    })
   );
 };

@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('fname');
     table.string('email').unique().notNullable();
     table.string('password').notNullable();
+    table.boolean('admin');
   });
 
 };
