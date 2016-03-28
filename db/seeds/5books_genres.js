@@ -2,11 +2,32 @@
 exports.seed = function(knex, Promise) {
   return Promise.join(
     // Deletes ALL existing entries
-    knex('table_name').del(), 
+    knex('books_genres').del(),
 
     // Inserts seed entries
-    knex('table_name').insert({id: 1, colName: 'rowValue'}),
-    knex('table_name').insert({id: 2, colName: 'rowValue2'}),
-    knex('table_name').insert({id: 3, colName: 'rowValue3'})
+    knex('books_genres').insert({
+        book_id: 1,
+        genre_id: 14
+    }),
+    knex('books_genres').insert({
+        book_id: 2,
+        genre_id: 14
+    }),
+    knex('books_genres').insert({
+        book_id: 3,
+        genre_id: 16
+    }),
+    knex('books_genres').insert({
+        book_id: 4,
+        genre_id: 2
+    }),
+    knex('books_genres').insert({
+        book_id: 5,
+        genre_id: 2
+    }),
+    knex('books_genres').insert({
+        book_id: 6,
+        genre_id: 7
+    })
   );
 };

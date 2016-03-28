@@ -33,7 +33,7 @@ exports.seed = function(knex, Promise) {
         password: bcrypt.hashSync('test', 10),
         admin: false
       }),
-      knex('users').insert(
+    knex('users').insert(
       {
         fname: 'Louis',
         email: 'loop@netscape.net',
