@@ -19,7 +19,7 @@ exports.seed = function(knex, Promise) {
     }),
     knex('genres').insert({
         name: 'Christian'
-    })
+    }),
     knex('genres').insert({
         name: 'Classics'
     }),
