@@ -27,13 +27,13 @@ exports.seed = function(knex, Promise) {
     }),
     knex('books').insert({
         title: 'Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future',
-        description:
+        description: 'Vance uses Musk\'s story to explore one of the pressing questions of our time: can the nation of inventors and creators which led the modern world for a century still compete in an age of fierce global competition? He argues that Musk--one of the most unusual and striking figures in American business history--is a contemporary amalgam of legendary inventors and industrialists like Thomas Edison, Henry Ford, Howard Hughes, and Steve Jobs. More than any other entrepreneur today, Musk has dedicated his energies and his own vast fortune to inventing a future that is as rich and far-reaching as the visionaries of the golden age of science-fiction fantasy.',
         cover: 'http://ecx.images-amazon.com/images/I/5174GQsw2oL.jpg'
     }),
     knex('books').insert({
-        title:
-        description:
-        cover:
+        title: 'Hyperbole and a Half: Unfortunate Situations, Flawed Coping Mechanisms, Mayhem, and Other Things That Happened',
+        description: 'This full-color, beautifully illustrated edition features more than fifty percent new content, with ten never-before-seen essays and one wholly revised and expanded piece as well as classics from the website like, “The God of Cake,” “Dogs Don’t Understand Basic Concepts Like Moving,” and her astonishing, “Adventures in Depression,” and “Depression Part Two,” which have been hailed as some of the most insightful meditations on the disease ever written.',
+        cover: 'http://ecx.images-amazon.com/images/I/51wAAzcD2uL.jpg'
     })
   );
 };
