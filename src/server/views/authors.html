@@ -10,9 +10,12 @@
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
 
-    {% for author in authors %}
+    {% for author in authorArray %}
         <div>
         <h2>{{author.fname}}</h2>
+        {% for book in author.bookArray %}
+          <h3>{{book}}</h3>
+        {% endfor %}
         </div>
     {% endfor %}
   </div>

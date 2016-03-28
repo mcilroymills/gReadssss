@@ -16,12 +16,12 @@ module.exports = {
     Books: function() {
         return Books();
     },
-    // listAll: function() {
-    //     return Authors()
-    //     .innerJoin('catalog', 'authors.id', 'catalog.author_id')
-    //     .innerJoin('books', 'books.id', 'catalog.book_id')
-    //     .orderBy('authors.lname');
-    // },
+    listAll: function() {
+        return Authors()
+        .innerJoin('catalog', 'authors.id', 'catalog.author_id')
+        .innerJoin('books', 'books.id', 'catalog.book_id')
+        .orderBy('authors.lname');
+    },
     singleAuthor: function(id) {
         return Authors().where('id', id);
     },
