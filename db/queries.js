@@ -38,6 +38,11 @@ module.exports = {
             .innerJoin('books_genres', 'genres.id', 'books_genres.genre_id')
             .orderBy('books_genres.book_id');
     },
+    GenreForOneBook: function(id) {
+        return Genres()
+            .innerJoin('books_genres', 'genres.id', 'books_genres.genre_id')
+            .where('books_genres.book_id', id);
+    },
     listAll: function() {
         return Books()
         .innerJoin('catalog', 'books.id', 'catalog.book_id')
