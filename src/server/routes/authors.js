@@ -36,7 +36,7 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/:id/delete', function(req, res, next) {
-    queries.deleteAuthor(req.params.id)
+  queries.deleteAuthor(req.params.id)
   .then(function(id) {
     res.redirect('/authors');
   })
@@ -54,7 +54,7 @@ router.post('/:id/edit', function(req, res, next) {
     res.redirect('authors', { title: 'Express' })
 });
 
-//This functions returns an array of author objects with an array of their books as a property
+//This functions returns an array of author object(s) with an array of their books as a property
 function addBookArray (data) {
   var authorArray = [];//Array of unique author objects
   var authorIDArray =[];//Array of author id's
@@ -87,7 +87,6 @@ function addBookArray (data) {
     authorArray[i].bookArray = bookArray;
     bookArray =[];
   }
-  console.log(authorArray);
   return authorArray;
 }
 
