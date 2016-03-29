@@ -11,7 +11,8 @@ function Books() {
 
 module.exports = {
     Authors: function() {
-        return Authors();
+        return Authors()
+            .orderBy('lname');
     },
     Books: function() {
         return Books();

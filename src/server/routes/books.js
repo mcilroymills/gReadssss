@@ -16,6 +16,7 @@ router.get('/', function(req, res, next) {
             authorResult.map(function(author){
                 bookQuery[author.book_id].authors.push(author);
             });
+
             res.render('books', {
                 title: 'All Books',
                 books: bookQuery,
@@ -67,7 +68,36 @@ router.get('/:id', function(req, res, next) {
 
 
 router.get('/:id/edit', function(req, res, next) {
-  res.render('book_new_edit', { title: 'Express' });
+    var urlID = req.params.id
+    queries.Books().where('id', urlID)
+    .then(function(bookResult) {
+        var bookQuery = bookResult[0];
+        bookQuery.authors = [];
+        queries.Genres()
+        .then(function(genres) {
+            var genres = genres;
+            queries.Authors()
+            .then(function(authorlist) {
+                var authorList = authorlist;
+                queries.OneAuthorByBookId(urlID)
+                .then(function(authorResult){
+                    authorResult.map(function(author){
+                        bookQuery.authors.push(author);
+                    });
+                    res.render('book_new_edit', {
+                        title: 'Edit '+ bookQuery.title,
+                        book: bookQuery,
+                        bookAuthors: bookQuery.authors,
+                        authors: authorList,
+                        genres: genres
+                    })
+                })
+            })
+        })
+    })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.post('/new', function(req, res, next) {
