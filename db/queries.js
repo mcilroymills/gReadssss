@@ -56,7 +56,7 @@ module.exports = {
         .where('id', id);
     },
     deleteBook: function(id) {
-        return Books.where('id', id).del();
+        return Books().where('id', id).del();
     }
 }
 
