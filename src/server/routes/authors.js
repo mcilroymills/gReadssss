@@ -3,6 +3,57 @@ var router = express.Router();
 var pg = require('pg');
 var queries = require('../../../db/authorQueries');
 
+router.get('/', function(req, res, next) {
+  queries.listAll()
+  .then(function(data) {
+    var authorArray = addBookArray(data);
+    res.render('authors', { authorArray:authorArray});
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.get('/:id', function(req, res, next) {
+  queries.singleAuthor(req.params.id)
+  .then(function(data) {
+    var authorArray = addBookArray(data);
+    res.render('author_show', { authorArray:authorArray});
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.get('/:id/edit', function(req, res, next) {
+  res.render('author_new_edit', { title: 'Express' });
+});
+
+router.get('/new', function(req, res, next) {
+  res.render('author_new_edit', { title: 'Express' });
+});
+
+router.post('/:id/delete', function(req, res, next) {
+    queries.deleteAuthor(req.params.id)
+  .then(function(id) {
+    res.redirect('/authors');
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.post('/new', function(req, res, next) {
+  res.redirect('authors', { title: 'Express' });
+});
+
+router.post('/:id/edit', function(req, res, next) {
+    res.redirect('authors', { title: 'Express' })
+});
+
 //This functions returns an array of author objects with an array of their books as a property
 function addBookArray (data) {
   var authorArray = [];//Array of unique author objects
@@ -39,48 +90,5 @@ function addBookArray (data) {
   console.log(authorArray);
   return authorArray;
 }
-
-router.get('/', function(req, res, next) {
-  queries.listAll()
-  .then(function(data) {
-    var authorArray = addBookArray(data);
-    res.render('authors', { authorArray:authorArray});
-  })
-  .catch(function(err) {
-    console.log('Error:', err);
-    return err;
-  });
-});
-
-router.get('/:id', function(req, res, next) {
-  res.render('author_show', { title: 'Express' });
-});
-
-router.get('/:id/edit', function(req, res, next) {
-  res.render('author_new_edit', { title: 'Express' });
-});
-
-router.get('/new', function(req, res, next) {
-  res.render('author_new_edit', { title: 'Express' });
-});
-
-router.post('/:id/delete', function(req, res, next) {
-    queries.deleteAuthor(req.params.id)
-  .then(function(id) {
-    res.redirect('/authors');
-  })
-  .catch(function(err) {
-    console.log('Error:', err);
-    return err;
-  });
-});
-
-router.post('/new', function(req, res, next) {
-  res.redirect('authors', { title: 'Express' });
-});
-
-router.post('/:id/edit', function(req, res, next) {
-    res.redirect('authors', { title: 'Express' })
-});
 
 module.exports = router;

@@ -41,6 +41,7 @@
           <p><strong>Books</strong></p>
           {% for book in author.bookArray %}
             <a href="/books/{{book.book_id}}">{{book.title}}</a>
+            <br>
           {% endfor %}
         </div>
         <div class="col-md-4">

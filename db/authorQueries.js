@@ -22,7 +22,10 @@ module.exports = {
         .orderBy('authors.lname');
     },
     singleAuthor: function(id) {
-        return Authors().where('id', id);
+        return Authors()
+        .where('authors.id', id)
+        .innerJoin('catalog', 'authors.id', 'catalog.author_id')
+        .innerJoin('books', 'books.id', 'catalog.book_id');
     },
     deleteAuthor: function (id) {
         return Authors().where('id', id).del();
