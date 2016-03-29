@@ -32,6 +32,13 @@ body {
     margin-top: 250px;
 }
 
+.right {
+    position: absolute;
+    top: 0;
+    right: 50px;
+}
+
 a {
   color: #00B7FF;
 }
+
