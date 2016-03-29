@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var queries = require('../../../db/authorQueries');
+var authorQueries = require('../../../db/authorQueries');
+var bookQueries = require('../../../db/queries');
 
 router.get('/', function(req, res, next) {
-  queries.listAll()
+
+  authorQueries.listAll()
   .then(function(data) {
+    console.log(data);
     var authorArray = addBookArray(data);
     res.render('authors', {
       authorArray: authorArray,
@@ -18,9 +21,21 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/:id', function(req, res, next) {
-  queries.singleAuthor(req.params.id)
+router.get('/new', function(req, res, next) {
+  authorQueries.Books()
   .then(function(data) {
+    res.render('author_new_edit', {data:data});
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.get('/:id', function(req, res, next) {
+  authorQueries.singleAuthor(req.params.id)
+  .then(function(data) {
+    console.log("singleauhtorquery:  ", data)
     var authorArray = addBookArray(data);
     res.render('author_show', { authorArray:authorArray});
   })
@@ -34,12 +49,8 @@ router.get('/:id/edit', function(req, res, next) {
   res.render('author_new_edit', { title: 'Express' });
 });
 
-router.get('/new', function(req, res, next) {
-  res.render('author_new_edit', { title: 'Express' });
-});
-
 router.post('/:id/delete', function(req, res, next) {
-  queries.deleteAuthor(req.params.id)
+  authorQueries.deleteAuthor(req.params.id)
   .then(function(id) {
     res.redirect('/authors');
   })
@@ -50,7 +61,40 @@ router.post('/:id/delete', function(req, res, next) {
 });
 
 router.post('/new', function(req, res, next) {
-  res.redirect('authors', { title: 'Express' });
+  var newID = null;
+
+  authorQueries.addAuthor({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    bio: req.body.bio,
+    img: req.body.img
+  })
+  .then(function(id) {
+    var bookIDArray = req.body.books;
+    console.log(req.body);
+    var insertArray = [];
+
+    //If author is added with books
+    if (req.body.books) {
+
+      for (var i = 0; i < bookIDArray.length; i++) {
+        var prop = bookIDArray[i];
+        var obj = {};
+        obj['book_id'] = prop;
+        obj['author_id'] = id[0];
+        insertArray.push(obj);
+      }
+      console.log("insertarray: ", insertArray);
+      authorQueries.addCatalog(insertArray).then(function(){
+        res.redirect('/authors/' + id);
+      });
+    }
+    res.redirect('/authors/' + id);
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
 });
 
 router.post('/:id/edit', function(req, res, next) {

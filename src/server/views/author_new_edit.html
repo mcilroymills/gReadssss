@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+  <div class="container">
+    <form method="POST" action="/authors/new" class="form-horizontal">
+      <fieldset>
+        <legend>New Author</legend>
+        <div class="form-group">
+          <label for="fname" class="col-lg-2 control-label">First Name</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="fname" name="fname" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lname" class="col-lg-2 control-label">Last Name</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="lname" name="lname" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="img" class="col-lg-2 control-label">Portrait URL</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="img" name="img" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="bio" class="col-lg-2 control-label">Bio</label>
+          <div class="col-lg-10">
+            <textarea class="form-control" rows="3" id="bio" name="bio" required></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="books" class="col-lg-2 control-label">Book(s)</label>
+          <div class="col-lg-10">
+            <select multiple="multiple" class="selectpicker form-control" name="books">
+              {% for book in data %}
+                <option value="{{book.id}}">{{book.title}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Author</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+{% endblock %}

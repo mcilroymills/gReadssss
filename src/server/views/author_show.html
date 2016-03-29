@@ -14,10 +14,10 @@
         </div>
         <div class="col-md-4">
           <h3>{{author.fname + ' ' + author.lname}}</h3>
-          <a href="/authors/{{author.author_id}}/edit" class="btn btn-warning">Edit</a>
+          <a href="/authors/{{author.authors_id}}/edit" class="btn btn-warning">Edit</a>
 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{author.author_id}}">Delete</button>
-          <div id="modal{{author.author_id}}" class="modal">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{author.authors_id}}">Delete</button>
+          <div id="modal{{author.authors_id}}" class="modal">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -28,7 +28,7 @@
                   <p>Are you sure you want to remove {{ author.fname + ' ' + author.lname}} from the database?</p>
                 </div>
                 <div class="modal-footer">
-                  <form method="POST" action="/authors/{{author.author_id}}/delete">
+                  <form method="POST" action="/authors/{{author.authors_id}}/delete">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Yes</button>
                   </form>

@@ -16,20 +16,29 @@ module.exports = {
         return Books();
     },
     listAll: function() {
-        return Authors()
-        .innerJoin('catalog', 'authors.id', 'catalog.author_id')
-        .innerJoin('books', 'books.id', 'catalog.book_id')
+        return knex.select('authors.id as authors_id', '*')
+        .from('authors')
+        .leftJoin('catalog', 'authors.id', 'catalog.author_id')
+        .leftJoin('books', 'books.id', 'catalog.book_id')
         .orderBy('authors.lname');
     },
     singleAuthor: function(id) {
-        return Authors()
+        return knex.select('authors.id as authors_id', '*')
+        .from('authors')
         .where('authors.id', id)
-        .innerJoin('catalog', 'authors.id', 'catalog.author_id')
-        .innerJoin('books', 'books.id', 'catalog.book_id');
+        .leftJoin('catalog', 'authors.id', 'catalog.author_id')
+        .leftJoin('books', 'books.id', 'catalog.book_id');
     },
     deleteAuthor: function (id) {
         return Authors().where('id', id).del();
+    },
+    addAuthor: function (data) {
+        return Authors()
+        .insert(data, 'id');
+    },
+    //Adds a book_id--author_id join row to catalog
+    addCatalog: function (book_author_array) {
+        return knex('catalog').insert(book_author_array);
     }
-
 }
 
