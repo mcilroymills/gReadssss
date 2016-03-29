@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
-
+app.use('/images',express.static(path.join(__dirname, '../client/image')));
 
 // *** main routes *** //
 app.use('/', index);

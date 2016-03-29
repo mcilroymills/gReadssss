@@ -1,6 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 147px;
+    width: 250px;
+}
+
+.listImg {
+    height: 200px;
+    width: 120px;
+}
+
+.content {
+    margin-top: 250px;
 }
 
 a {
