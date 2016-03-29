@@ -3,40 +3,48 @@ var router = express.Router();
 var pg = require('pg');
 var queries = require('../../../db/authorQueries');
 
-router.get('/', function(req, res, next) {
-  queries.listAll()
-  .then(function(data) {
+//This functions returns an array of author objects with an array of their books as a property
+function addBookArray (data) {
+  var authorArray = [];//Array of unique author objects
+  var authorIDArray =[];//Array of author id's
+  var bookArray = [];//Array of book titles
 
-    var authorArray = [];//Array of unique author objects
-    var authorIDArray =[];//Array of author id's
-    var bookArray = [];
-
-   data.forEach(function(el){
-      if (authorIDArray.indexOf(el['author_id']) === -1) {
+  data.forEach(function(el){
+    if (authorIDArray.indexOf(el['author_id']) === -1) {
         authorIDArray.push(el.author_id);
       }
-    })
+  })
 
-   for (var i = 0; i < authorIDArray.length; i++) {
-     for (var j = 0; j < data.length; j++) {
+  for (var i = 0; i < authorIDArray.length; i++) {
+    for (var j = 0; j < data.length; j++) {
       if (authorIDArray[i] === data[j].author_id) {
         authorArray.push(data[j]);
         break;
       }
-     }
-   };
+    }
+  };
 
   for (var i = 0; i < authorArray.length; i++) {
-      for (var j = 0; j < data.length; j++) {
-        if (authorArray[i].author_id === data[j].author_id)
-          bookArray.push(data[j].title);
+    for (var j = 0; j < data.length; j++) {
+      if (authorArray[i].author_id === data[j].author_id) {
+        bookArray.push({
+          title: data[j].title,
+          book_id: data[j].book_id
+        });
       }
-      authorArray[i].bookArray = bookArray;
-      bookArray =[];
     }
+    authorArray[i].bookArray = bookArray;
+    bookArray =[];
+  }
+  console.log(authorArray);
+  return authorArray;
+}
 
+router.get('/', function(req, res, next) {
+  queries.listAll()
+  .then(function(data) {
+    var authorArray = addBookArray(data);
     res.render('authors', { authorArray:authorArray});
-
   })
   .catch(function(err) {
     console.log('Error:', err);

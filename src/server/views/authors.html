@@ -10,10 +10,10 @@
     {% for author in authorArray %}
       <div class="row">
         <div class="col-md-4">
-          <img src="{{author.img}}">
+          <a href="/authors/{{author.author_id}}"><img src="{{author.img}}"></a>
         </div>
         <div class="col-md-4">
-          <h3>{{author.fname + ' ' + author.lname}}</h3>
+          <a href="authors/{{author.author_id}}"><h3>{{author.fname + ' ' + author.lname}}</h3></a>
           <a href="/authors/{{author.author_id}}/edit" class="btn btn-warning">Edit</a>
 
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{author.author_id}}">Delete</button>
@@ -40,7 +40,7 @@
           <p>{{author.bio}}</p>
           <p><strong>Books</strong></p>
           {% for book in author.bookArray %}
-            <p>{{book}}</p>
+            <a href="/books/{{book.book_id}}">{{book.title}}</a>
           {% endfor %}
         </div>
         <div class="col-md-4">
