@@ -12,7 +12,27 @@
         <div class="col-lg-4">
             <img src="{{book.cover}}" class="showImg" style="display: block; margin-bottom: 10px;">
             <a href="/books/{{book.id}}/edit" class="btn btn-warning">Edit</a>
-            <a href="/books/{{book.id}}/delete" class="btn btn-danger">Delete</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal{{author.author_id}}">Delete</button>
+
+            <div id="modal{{author.author_id}}" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Delete Book</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to remove {{book.title}} from the database?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <form method="POST" action="/authors/{{author.author_id}}/delete">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Yes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-4">
             <p>{{book.genre.name}}</p>

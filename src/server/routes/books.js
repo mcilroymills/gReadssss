@@ -152,7 +152,20 @@ router.get('/:id/edit', function(req, res, next) {
     })
 });
 
+// +++++++++++++++++++++++++ POSTS ++++++++++++++++++++++++++ \\
+
 router.post('/new', function(req, res, next) {
+  queries.addBook(req.body)
+  .then(function() {
+    res.redirect('/');
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.post('/new-go-to-add-author', function(req, res, next) {
   queries.addBook(req.body)
   .then(function() {
     res.redirect('/');
@@ -167,6 +180,17 @@ router.post('/:id/edit', function(req, res, next) {
   queries.editBook(req.body, req.params.id)
   .then(function() {
     res.redirect('/' + req.params.id);
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
+});
+
+router.post('/:id/edit-go-to-add-author', function(req, res, next) {
+  queries.editBook(req.body, req.params.id)
+  .then(function() {
+    res.redirect('/authors/new');
   })
   .catch(function(err) {
     console.log('Error:', err);
