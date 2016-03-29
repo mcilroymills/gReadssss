@@ -7,7 +7,10 @@ router.get('/', function(req, res, next) {
   queries.listAll()
   .then(function(data) {
     var authorArray = addBookArray(data);
-    res.render('authors', { authorArray:authorArray});
+    res.render('authors', {
+      authorArray: authorArray,
+      total: authorArray.length
+    });
   })
   .catch(function(err) {
     console.log('Error:', err);
