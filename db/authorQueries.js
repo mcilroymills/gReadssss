@@ -8,7 +8,6 @@ function Books() {
     return knex('books');
 }
 
-
 module.exports = {
     Authors: function() {
         return Authors();
@@ -25,10 +24,9 @@ module.exports = {
     singleAuthor: function(id) {
         return Authors().where('id', id);
     },
-    trying: function() {
-        return Authors()
-        .innerJoin('stuff', 'authors.id', 'stuff.author_id')
-        .orderBy('authors.lname');
+    deleteAuthor: function (id) {
+        return Authors().where('id', id).del();
     }
+
 }
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var queries = require('../../../db/queries');
+//var queries = require('../../../db/queries');
 
 router.get('/', function(req, res, next) {
   res.render('books', { title: 'Express' });

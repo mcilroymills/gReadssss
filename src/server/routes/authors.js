@@ -1,24 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var queries = require('../../../db/queries');
+var queries = require('../../../db/authorQueries');
 
 router.get('/', function(req, res, next) {
   queries.listAll()
   .then(function(data) {
 
     var authorArray = [];//Array of unique author objects
-    var authorIDArray =[];
+    var authorIDArray =[];//Array of author id's
     var bookArray = [];
-
-
-    // for (var i = 0; i < data.length; i++) {
-    //   if (authorArray.indexOf(data[i]['author_id']) === -1) {
-    //     authorArray.push(data[i].author_id);
-    //     console.log(authorArray.length);
-    //   }
-
-    // }
 
    data.forEach(function(el){
       if (authorIDArray.indexOf(el['author_id']) === -1) {
@@ -66,7 +57,14 @@ router.get('/new', function(req, res, next) {
 });
 
 router.post('/:id/delete', function(req, res, next) {
-    res.redirect('authors', { title: 'Express'})
+    queries.deleteAuthor(req.params.id)
+  .then(function(id) {
+    res.redirect('/authors');
+  })
+  .catch(function(err) {
+    console.log('Error:', err);
+    return err;
+  });
 });
 
 router.post('/new', function(req, res, next) {
