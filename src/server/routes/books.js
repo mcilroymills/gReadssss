@@ -7,24 +7,66 @@ router.get('/', function(req, res, next) {
     queries.Books()
     .then(function(bookResult) {
         var bookQuery = {};
+
         bookResult.map(function(book){
             book.authors = [];
+            book.genre = {};
             bookQuery[book.id] = book;
         });
+
         queries.AuthorsByBookId()
         .then(function(authorResult){
             authorResult.map(function(author){
                 bookQuery[author.book_id].authors.push(author);
             });
-            res.render('books', {
-                title: 'All Books',
-                books: bookQuery,
-                total: bookResult.length
+            queries.GenreByBookId()
+            .then(function(genreResult) {
+                var promise = new Promise(function (resolve, reject) {
+                    genreResult.map(function(genre) {
+                        bookQuery[genre.book_id].genre = {
+                            id: genre.id,
+                            name: genre.name
+                        };
+                    });
+                    resolve();
+                });
+                return promise;
             })
+            .catch(function(err) {
+                return next(err);
+            })
+            .then(function () {
+                res.render('books', {
+                    title: 'All Books',
+                    books: bookQuery,
+                    total: bookResult.length
+                })
+            })
+            .catch(function(err){
+                return next(err);
+            })
+        })
+        .catch(function(err) {
+            return next(err);
         })
     })
     .catch(function(err) {
         return next(err);
+    })
+});
+
+router.get('/new', function(req, res, next) {
+    queries.Genres()
+    .then(function(genres) {
+        var genres = genres;
+        queries.Authors()
+        .then(function(authors) {
+            res.render('book_new_edit', {
+                title: 'Add New Book',
+                authors: authors,
+                genres: genres
+            });
+        })
     })
 });
 
@@ -50,12 +92,38 @@ router.get('/:id', function(req, res, next) {
     })
 });
 
-router.get('/new', function(req, res, next) {
-  res.render('book_new_edit', { title: 'Express' });
-});
 
 router.get('/:id/edit', function(req, res, next) {
-  res.render('book_new_edit', { title: 'Express' });
+    var urlID = req.params.id
+    queries.Books().where('id', urlID)
+    .then(function(bookResult) {
+        var bookQuery = bookResult[0];
+        bookQuery.authors = [];
+        queries.Genres()
+        .then(function(genres) {
+            var genres = genres;
+            queries.Authors()
+            .then(function(authorlist) {
+                var authorList = authorlist;
+                queries.OneAuthorByBookId(urlID)
+                .then(function(authorResult){
+                    authorResult.map(function(author){
+                        bookQuery.authors.push(author);
+                    });
+                    res.render('book_new_edit', {
+                        title: 'Edit '+ bookQuery.title,
+                        book: bookQuery,
+                        bookAuthors: bookQuery.authors,
+                        authors: authorList,
+                        genres: genres
+                    })
+                })
+            })
+        })
+    })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.post('/new', function(req, res, next) {

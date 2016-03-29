@@ -8,13 +8,20 @@ function Books() {
     return knex('books');
 }
 
+function Genres() {
+    return knex('genres');
+}
 
 module.exports = {
     Authors: function() {
-        return Authors();
+        return Authors()
+            .orderBy('lname');
     },
     Books: function() {
         return Books();
+    },
+    Genres: function() {
+        return Genres();
     },
     AuthorsByBookId: function() {
         return Authors()
@@ -25,6 +32,11 @@ module.exports = {
         return Authors()
             .innerJoin('catalog','authors.id', 'catalog.author_id')
             .where('catalog.book_id', id);
+    },
+    GenreByBookId: function() {
+        return Genres()
+            .innerJoin('books_genres', 'genres.id', 'books_genres.genre_id')
+            .orderBy('books_genres.book_id');
     },
     listAll: function() {
         return Books()
