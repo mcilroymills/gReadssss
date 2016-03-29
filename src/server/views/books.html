@@ -16,6 +16,7 @@
         </div>
         <div class="col-6-lg">
             <a href="/books/{{book.id}}"><h3>{{book.title}}</h3></a>
+            <p>{{book.genre.name}}</p>
             <h5>Author(s)</h5>
             {% for author in book.authors %}
                 <a href="/authors/{{author.id}}"><p>{{author.fname}} {{author.lname}}</p></a>

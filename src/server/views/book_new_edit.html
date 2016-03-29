@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+    <div class="col-lg-9">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>{{ title }}</legend>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="title">Title</label>
+                    <div class="col-md-5">
+                        <input id="title" name="title" type="text" placeholder="" class="form-control input-md" required="" value="{{book.title}}">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="genre">Genre</label>
+                    <div class="col-md-5">
+                        <select id="genre" name="genre" class="form-control">
+                            {% for genre in genres %}
+                                <option value="{{genre.id}}">{{genre.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="cover">Cover Image URL</label>
+                    <div class="col-md-5">
+                        <input id="cover" name="cover" type="text" placeholder="Amazon image link recommended" class="form-control input-md" value="{{book.cover}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="description">Book Description</label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" id="description" name="description">{{book.description}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="author">Author(s)</label>
+                    <div class="col-md-5">
+                        <select id="author" name="author" class="form-control" multiple="multiple">
+                            {% for author in bookAuthors %}
+                                <option value="{{author.id}}"selected>{{author.fname}} {{author.lname}}</option>
+                            {% endfor %}
+                            {% for author in authors %}
+                                <option value="{{author.id}}">{{author.fname}} {{author.lname}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="help-block">Press Cmd or Ctrl to select more than one.</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="add-author">Add New Author</label>
+                    <input type="checkbox" name="add-author">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="add-author"> </label>
+                    <input type="submit" value="Submit" class="btn btn-success btn-md">
+                </div>
+        </fieldset>
+    </form>
+
+
+  </div>
+
+{% endblock %}
