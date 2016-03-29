@@ -7,21 +7,47 @@ router.get('/', function(req, res, next) {
     queries.Books()
     .then(function(bookResult) {
         var bookQuery = {};
+
         bookResult.map(function(book){
             book.authors = [];
+            book.genre = {};
             bookQuery[book.id] = book;
         });
+
         queries.AuthorsByBookId()
         .then(function(authorResult){
             authorResult.map(function(author){
                 bookQuery[author.book_id].authors.push(author);
             });
-
-            res.render('books', {
-                title: 'All Books',
-                books: bookQuery,
-                total: bookResult.length
+            queries.GenreByBookId()
+            .then(function(genreResult) {
+                var promise = new Promise(function (resolve, reject) {
+                    genreResult.map(function(genre) {
+                        bookQuery[genre.book_id].genre = {
+                            id: genre.id,
+                            name: genre.name
+                        };
+                    });
+                    resolve();
+                });
+                return promise;
             })
+            .catch(function(err) {
+                return next(err);
+            })
+            .then(function () {
+                res.render('books', {
+                    title: 'All Books',
+                    books: bookQuery,
+                    total: bookResult.length
+                })
+            })
+            .catch(function(err){
+                return next(err);
+            })
+        })
+        .catch(function(err) {
+            return next(err);
         })
     })
     .catch(function(err) {
