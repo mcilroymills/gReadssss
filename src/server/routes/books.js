@@ -76,15 +76,29 @@ router.get('/:id', function(req, res, next) {
     .then(function(bookResult) {
         var bookQuery = bookResult[0];
         bookQuery.authors = [];
+        bookQuery.genre = {};
         queries.OneAuthorByBookId(urlID)
         .then(function(authorResult){
             authorResult.map(function(author){
                 bookQuery.authors.push(author);
             });
-            res.render('book_show', {
-                title: bookQuery.title,
-                book: bookQuery
+            queries.GenreForOneBook(urlID)
+            .then(function(genreInfo) {
+                genreInfo = genreInfo[0];
+                bookQuery.genre.id = genreInfo.id;
+                bookQuery.genre.name = genreInfo.name;
+
+                res.render('book_show', {
+                    title: bookQuery.title,
+                    book: bookQuery
+                })
             })
+            .catch(function(err) {
+                return next(err);
+            })
+        })
+        .catch(function(err) {
+            return next(err);
         })
     })
     .catch(function(err) {
@@ -99,6 +113,7 @@ router.get('/:id/edit', function(req, res, next) {
     .then(function(bookResult) {
         var bookQuery = bookResult[0];
         bookQuery.authors = [];
+        bookQuery.genre = {};
         queries.Genres()
         .then(function(genres) {
             var genres = genres;
@@ -110,13 +125,24 @@ router.get('/:id/edit', function(req, res, next) {
                     authorResult.map(function(author){
                         bookQuery.authors.push(author);
                     });
-                    res.render('book_new_edit', {
-                        title: 'Edit '+ bookQuery.title,
-                        book: bookQuery,
-                        bookAuthors: bookQuery.authors,
-                        authors: authorList,
-                        genres: genres
+                    queries.GenreForOneBook(urlID)
+                    .then(function(genreInfo) {
+                        genreInfo = genreInfo[0];
+                        bookQuery.genre.id = genreInfo.id;
+                        bookQuery.genre.name = genreInfo.name;
+
+                        res.render('book_new_edit', {
+                                title: 'Edit '+ bookQuery.title,
+                                book: bookQuery,
+                                bookAuthors: bookQuery.authors,
+                                authors: authorList,
+                                genres: genres
+                            })
                     })
+                    .catch(function(err) {
+                        return next(err);
+                    })
+
                 })
             })
         })

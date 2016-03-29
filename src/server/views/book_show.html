@@ -15,7 +15,7 @@
             <a href="/books/{{book.id}}/delete" class="btn btn-danger">Delete</a>
         </div>
         <div class="col-lg-4">
-            <p>{{book.genre}}</p>
+            <p>{{book.genre.name}}</p>
             <h4>Authors(s)</h4>
             {% for author in book.authors %}
                 <a href="/authors/{{author.id}}"><p>{{author.fname}} {{author.lname}}</p></a>
