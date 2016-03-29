@@ -23,10 +23,31 @@ router.get('/', function(req, res, next) {
             })
         })
     })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.get('/:id', function(req, res, next) {
-  res.render('book_show', { title: 'Express' });
+    var urlID = req.params.id
+    queries.Books().where('id', urlID)
+    .then(function(bookResult) {
+        var bookQuery = bookResult[0];
+        bookQuery.authors = [];
+        queries.OneAuthorByBookId(urlID)
+        .then(function(authorResult){
+            authorResult.map(function(author){
+                bookQuery.authors.push(author);
+            });
+            res.render('book_show', {
+                title: bookQuery.title,
+                book: bookQuery
+            })
+        })
+    })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.get('/new', function(req, res, next) {

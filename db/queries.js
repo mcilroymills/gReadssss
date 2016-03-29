@@ -21,6 +21,11 @@ module.exports = {
             .innerJoin('catalog','authors.id', 'catalog.author_id')
             .orderBy('catalog.book_id');
     },
+    OneAuthorByBookId: function(id) {
+        return Authors()
+            .innerJoin('catalog','authors.id', 'catalog.author_id')
+            .where('catalog.book_id', id);
+    },
     listAll: function() {
         return Books()
         .innerJoin('catalog', 'books.id', 'catalog.book_id')

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="{{book.cover}}" class="showImg" style="display: block; margin-bottom: 10px;">
+            <a href="/books/{{book.id}}/edit" class="btn btn-warning">Edit</a>
+            <a href="/books/{{book.id}}/delete" class="btn btn-danger">Delete</a>
+        </div>
+        <div class="col-lg-4">
+            <p>{{book.genre}}</p>
+            <h4>Authors(s)</h4>
+            {% for author in book.authors %}
+                <a href="/authors/{{author.id}}"><p>{{author.fname}} {{author.lname}}</p></a>
+            {% endfor %}
+            <p>{{book.description}}</p>
+        </div>
+    </div>
+
+
+  </div>
+
+{% endblock %}
