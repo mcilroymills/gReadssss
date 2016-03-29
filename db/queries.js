@@ -16,6 +16,9 @@ module.exports = {
     Books: function() {
         return Books();
     },
+    Genres: function() {
+        return knex('genres');
+    },
     AuthorsByBookId: function() {
         return Authors()
             .innerJoin('catalog','authors.id', 'catalog.author_id')

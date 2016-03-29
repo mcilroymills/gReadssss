@@ -28,6 +28,21 @@ router.get('/', function(req, res, next) {
     })
 });
 
+router.get('/new', function(req, res, next) {
+    queries.Genres()
+    .then(function(genres) {
+        var genres = genres;
+        queries.Authors()
+        .then(function(authors) {
+            res.render('book_new_edit', {
+                title: 'Add New Book',
+                authors: authors,
+                genres: genres
+            });
+        })
+    })
+});
+
 router.get('/:id', function(req, res, next) {
     var urlID = req.params.id
     queries.Books().where('id', urlID)
@@ -50,9 +65,6 @@ router.get('/:id', function(req, res, next) {
     })
 });
 
-router.get('/new', function(req, res, next) {
-  res.render('book_new_edit', { title: 'Express' });
-});
 
 router.get('/:id/edit', function(req, res, next) {
   res.render('book_new_edit', { title: 'Express' });
