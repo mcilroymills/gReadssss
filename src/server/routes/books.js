@@ -1,14 +1,53 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-//var queries = require('../../../db/queries');
+var queries = require('../../../db/queries');
 
 router.get('/', function(req, res, next) {
-  res.render('books', { title: 'Express' });
+    queries.Books()
+    .then(function(bookResult) {
+        var bookQuery = {};
+        bookResult.map(function(book){
+            book.authors = [];
+            bookQuery[book.id] = book;
+        });
+        queries.AuthorsByBookId()
+        .then(function(authorResult){
+            authorResult.map(function(author){
+                bookQuery[author.book_id].authors.push(author);
+            });
+            res.render('books', {
+                title: 'All Books',
+                books: bookQuery,
+                total: bookResult.length
+            })
+        })
+    })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.get('/:id', function(req, res, next) {
-  res.render('book_show', { title: 'Express' });
+    var urlID = req.params.id
+    queries.Books().where('id', urlID)
+    .then(function(bookResult) {
+        var bookQuery = bookResult[0];
+        bookQuery.authors = [];
+        queries.OneAuthorByBookId(urlID)
+        .then(function(authorResult){
+            authorResult.map(function(author){
+                bookQuery.authors.push(author);
+            });
+            res.render('book_show', {
+                title: bookQuery.title,
+                book: bookQuery
+            })
+        })
+    })
+    .catch(function(err) {
+        return next(err);
+    })
 });
 
 router.get('/new', function(req, res, next) {
