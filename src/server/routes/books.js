@@ -201,7 +201,7 @@ router.post('/:id/edit-go-to-add-author', function(req, res, next) {
 router.post('/:id/delete', function(req, res, next) {
   queries.deleteBook(req.params.id)
   .then(function() {
-    res.redirect('/');
+    res.redirect('/books');
   })
   .catch(function(err) {
     console.log('Error:', err);
