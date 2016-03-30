@@ -20,12 +20,12 @@ body {
 
 .listImg {
     height: 200px;
-    width: 140px;
+    /*width: 140px;*/
 }
 
 .showImg {
     height: 400px;
-    width: 260px;
+    /*width: 260px;*/
 }
 
 .content {

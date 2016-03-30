@@ -10,7 +10,7 @@
         {% for author in authorArray %}
             <div class="authorChunk row">
                 <div class="col-md-3">
-                    <a href="/authors/{{author.authors_id}}" style="display: block; margin-bottom: 10px;" ><img src="{{author.img}}" ></a>
+                    <a href="/authors/{{author.authors_id}}" style="display: block; margin-bottom: 10px;" ><img class="listImg" src="{{author.img}}" ></a>
                     <a href="/authors/{{author.authors_id}}/edit" class="btn btn-warning">Edit</a>
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{author.author_id}}">Delete</button>
