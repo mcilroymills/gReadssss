@@ -39,6 +39,14 @@ module.exports = {
     //Adds a book_id--author_id join row to catalog
     addCatalog: function (book_author_array) {
         return knex('catalog').insert(book_author_array);
+    },
+    //Deletes rows in catalog table that contain author_id
+    deleteCatalog: function (author_id) {
+        return knex('catalog').where('author_id',author_id).del();
+    },
+    updateAuthor: function (id, data) {
+        return Authors().where('id', id)
+        .update(data);
     }
 }
 

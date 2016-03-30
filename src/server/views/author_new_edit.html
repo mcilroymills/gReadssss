@@ -8,29 +8,35 @@
   <div class="container">
     <form method="POST" action="/authors/new" class="form-horizontal">
       <fieldset>
-        <legend>New Author</legend>
+        <legend>{% if authorArray %}
+        Edit Author
+        {% else %}
+        New Author
+        {% endif %}
+        </legend>
         <div class="form-group">
           <label for="fname" class="col-lg-2 control-label">First Name</label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="fname" name="fname" required>
+            <input type="text" class="form-control" id="fname" name="fname" value="{% if authorArray %}{{authorArray[0].fname}}{% endif %}" required>
           </div>
         </div>
         <div class="form-group">
           <label for="lname" class="col-lg-2 control-label">Last Name</label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="lname" name="lname" required>
+            <input type="text" class="form-control" id="lname" name="lname" value="{% if authorArray %}{{authorArray[0].lname}}{% endif %}" required>
           </div>
         </div>
         <div class="form-group">
           <label for="img" class="col-lg-2 control-label">Portrait URL</label>
           <div class="col-lg-10">
-            <input type="text" class="form-control" id="img" name="img" required>
+            <input type="text" class="form-control" id="img" name="img" value="{% if authorArray %}{{authorArray[0].img}}{% endif %}" required>
+            <input type="hidden" name="id" value="{% if authorArray %}{{authorArray[0].authors_id}}{% endif %}">
           </div>
         </div>
         <div class="form-group">
           <label for="bio" class="col-lg-2 control-label">Bio</label>
           <div class="col-lg-10">
-            <textarea class="form-control" rows="3" id="bio" name="bio" required></textarea>
+            <textarea class="form-control" rows="3" id="bio" name="bio" required>{% if authorArray %}{{authorArray[0].bio}}{% endif %}</textarea>
           </div>
         </div>
         <div class="form-group">
@@ -46,7 +52,7 @@
         <div class="form-group">
           <div class="col-lg-10 col-lg-offset-2">
             <button type="reset" class="btn btn-default">Cancel</button>
-            <button type="submit" class="btn btn-primary">Add Author</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
       </fieldset>
