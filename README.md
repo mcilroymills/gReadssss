@@ -1,3 +1,3 @@
 # gReadssss
 
-Live site: https://greadssss.herokuapp.com/authors
+Live site: https://greadssss.herokuapp.com/
